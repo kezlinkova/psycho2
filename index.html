@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mgr. Roman Žižlavský – Psychoterapeut</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:    #F9F6F0;
+      --warm:     #F3EDE3;
+      --sage:     #7A9B7E;
+      --sage-lt:  #B5CEB8;
+      --sage-dk:  #5A7A5E;
+      --rose:     #C49890;
+      --rose-lt:  #E8D0CB;
+      --text:     #3A3330;
+      --muted:    #7A6E68;
+      --border:   #E2D9CE;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    a { color: inherit; }
+
+    /* ── SKIP LINK ── */
+    .skip-link {
+      position: absolute; top: -40px; left: 0;
+      background: var(--sage); color: #fff;
+      padding: .5rem 1rem; font-size: .85rem;
+      z-index: 999; transition: top .2s;
+    }
+    .skip-link:focus { top: 0; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 6%;
+      background: rgba(249,246,240,0.93);
+      backdrop-filter: blur(10px);
+      transition: box-shadow .3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,.06); }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem; font-weight: 400; letter-spacing: .01em;
+      color: var(--text); text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+    .nav-links a {
+      text-decoration: none; color: var(--muted);
+      font-size: .78rem; font-weight: 400; letter-spacing: .1em; text-transform: uppercase;
+      transition: color .25s;
+    }
+    .nav-links a:hover { color: var(--sage); }
+    .nav-cta {
+      border: 1px solid var(--sage-lt) !important;
+      color: var(--sage) !important;
+      padding: .4rem 1.1rem; border-radius: 20px;
+    }
+    .nav-cta:hover { background: var(--sage) !important; color: #fff !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      text-align: center; padding: 8rem 6% 6rem;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('img/sunset.jpg');
+      background-size: cover; background-position: center 30%;
+      filter: saturate(.5) brightness(.78);
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(249,246,240,.82) 0%,
+        rgba(249,246,240,.52) 45%,
+        rgba(90,122,94,.22) 100%
+      );
+    }
+    .hero-content {
+      position: relative; max-width: 700px;
+      animation: fadeUp .9s ease both;
+    }
+    .hero-tag {
+      font-size: 14px; font-weight: 400; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--sage); margin-bottom: 2rem;
+    }
+    .hero-h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 4.2rem);
+      font-weight: 400; line-height: 1.15; color: var(--text);
+      margin-bottom: .6rem;
+    }
+    .hero-sub-big {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      font-weight: 300; font-style: italic; color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .hero-desc {
+      font-size: 16px; color: var(--text); font-weight: 400;
+      margin-top: 2rem; margin-bottom: 2.5rem; line-height: 1.9;
+    }
+    .btn {
+      display: inline-block; text-decoration: none;
+      font-size: .78rem; font-weight: 400;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: .9rem 2.3rem; border-radius: 30px;
+      transition: all .25s;
+    }
+    .btn-sage { background: var(--sage); color: #fff; }
+    .btn-sage:hover { background: var(--sage-dk); transform: translateY(-1px); }
+
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      color: #fff; font-size: .65rem; letter-spacing: .25em; text-transform: uppercase;
+      display: flex; flex-direction: column; align-items: center; gap: .6rem;
+      animation: float 2.5s ease-in-out infinite;
+    }
+    .scroll-hint::after {
+      content: ''; width: 1px; height: 36px; background: var(--sage-lt);
+    }
+
+    /* ── MOTTO BAND ── */
+    .motto-band {
+      background: var(--warm);
+      padding: 3.5rem 6%; text-align: center;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .motto-band p {
+      font-size: .7rem; font-weight: 400; letter-spacing: .25em;
+      text-transform: uppercase; color: var(--sage); margin-bottom: .8rem;
+    }
+    .motto-band h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 400; color: var(--muted); line-height: 1.3;
+    }
+
+    /* ── SECTIONS ── */
+    .section { padding: 6rem 6%; }
+    .section.tinted { background: var(--warm); }
+    .section-inner { max-width: 1080px; margin: 0 auto; }
+    .prose-inner { max-width: 720px; margin: 0 auto; }
+
+    .s-tag {
+      font-size: .68rem; font-weight: 400; letter-spacing: .28em;
+      text-transform: uppercase; color: var(--sage); margin-bottom: .9rem;
+      display: block;
+    }
+    .s-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 400; line-height: 1.25; color: var(--text);
+      margin-bottom: 1.8rem;
+    }
+    .s-body {
+      color: var(--muted); font-size: 1rem; line-height: 1.9; font-weight: 300;
+    }
+    .s-body p + p { margin-top: 1.2rem; }
+
+    .thin-rule { width: 40px; height: 1px; background: var(--rose-lt); margin: 1.4rem 0; }
+    .thin-rule.center { margin-left: auto; margin-right: auto; }
+
+    /* ── INTRO LIST ── */
+    .intro-list {
+      list-style: none; margin-top: 2rem;
+      display: flex; flex-direction: column; gap: .75rem;
+    }
+    .intro-list li {
+      display: flex; align-items: flex-start; gap: .9rem;
+      font-size: .97rem; color: var(--muted); font-weight: 300; line-height: 1.7;
+    }
+    .intro-list li::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--rose); flex-shrink: 0; margin-top: .58rem;
+    }
+
+    /* ── SPLIT ── */
+    .split-grid {
+      display: grid; grid-template-columns: 1fr 1.1fr;
+      gap: 5rem; align-items: center;
+    }
+    .split-img {
+      position: relative; border-radius: 16px; overflow: hidden;
+    }
+    .split-img img {
+      width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: top;
+      display: block; filter: saturate(.8);
+    }
+    .split-img-accent {
+      position: absolute; bottom: -12px; right: -12px;
+      width: 55%; height: 55%; border: 1.5px solid var(--rose-lt);
+      border-radius: 12px; z-index: -1;
+    }
+    .split-text { display: flex; flex-direction: column; gap: 1.2rem; }
+
+    /* ── STATS ── */
+    .stats {
+      display: flex; gap: 2.5rem; margin-top: .5rem; flex-wrap: wrap;
+    }
+    .stat-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 400; color: var(--sage-dk);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: .8rem; color: var(--muted); font-weight: 300; margin-top: .2rem;
+    }
+
+    /* ── APPROACH ── */
+    .approach-intro {
+      max-width: 760px; margin-bottom: 3rem;
+    }
+    .approach-cards {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; margin-bottom: 3rem;
+    }
+    .approach-card {
+      padding: 1.8rem 0;
+    }
+    .approach-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 500;
+      color: var(--text); margin-bottom: .8rem;
+    }
+    .approach-card p {
+      font-size: 1rem; color: var(--muted); line-height: 1.85; font-weight: 300;
+    }
+    .approach-more {
+      max-width: 760px;
+    }
+    .approach-more p {
+      color: var(--muted); font-size: 1rem; line-height: 1.9; font-weight: 300;
+      border-left: 2px solid var(--rose-lt); padding-left: 1.5rem;
+    }
+    .approach-more p + p { margin-top: 1rem; }
+
+    /* ── QUOTE BAND ── */
+    .quote-band {
+      position: relative; overflow: hidden;
+      padding: 6rem 6%; text-align: center;
+    }
+    .quote-band-bg {
+      position: absolute; inset: 0;
+      background-image: url('img/prayer-flags.jpg');
+      background-size: cover; background-position: center;
+      filter: saturate(.5) brightness(.6);
+    }
+    .quote-band-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(90,122,94,.55), rgba(58,51,48,.5));
+    }
+    .quote-band-content { position: relative; max-width: 680px; margin: 0 auto; }
+    .quote-band blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      font-weight: 300; font-style: italic; color: #fff; line-height: 1.5;
+    }
+    .quote-band cite {
+      display: block; margin-top: 1.2rem;
+      font-family: 'Inter', sans-serif;
+      font-size: .7rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--sage-lt); font-style: normal;
+    }
+
+    /* ── MEDIA ── */
+    .media-tagline {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-style: italic; font-weight: 300;
+      color: var(--muted); margin-bottom: 2.5rem;
+    }
+    .media-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; margin-top: 2rem;
+    }
+    .media-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.8rem;
+      display: flex; flex-direction: column; gap: .7rem;
+      text-decoration: none; color: var(--text);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .media-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0,0,0,.07);
+    }
+    .media-type {
+      font-size: .65rem; font-weight: 400; letter-spacing: .22em;
+      text-transform: uppercase; color: var(--sage);
+    }
+    .media-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 500; line-height: 1.35; color: var(--text);
+    }
+    .media-card p {
+      font-size: .88rem; color: var(--muted); line-height: 1.7; font-weight: 300;
+    }
+    .media-link {
+      font-size: .78rem; color: var(--sage); font-weight: 400;
+      letter-spacing: .05em; margin-top: auto;
+    }
+    .media-closing {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-style: italic; font-weight: 300;
+      color: var(--muted); text-align: center; margin-top: 3rem;
+    }
+
+    /* ── PRICING ── */
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; margin: 2.5rem 0;
+    }
+    .price-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 16px; padding: 2rem 1.8rem;
+      display: flex; flex-direction: column; gap: .5rem;
+    }
+    .price-card-type {
+      font-size: .65rem; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--sage); font-weight: 400;
+    }
+    .price-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; font-weight: 500; color: var(--text);
+    }
+    .price-card-location {
+      font-size: .82rem; color: var(--muted); font-weight: 300;
+    }
+    .price-card-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; font-weight: 300; color: var(--sage-dk);
+      margin: .5rem 0;
+    }
+    .price-card-amount small {
+      font-size: 1rem; font-family: 'Inter', sans-serif; color: var(--muted);
+    }
+    .price-card-desc {
+      font-size: .88rem; color: var(--muted); line-height: 1.75; font-weight: 300;
+    }
+
+    .pricing-meta {
+      border-top: 1px solid var(--border); padding-top: 2rem;
+      display: flex; flex-direction: column; gap: .65rem;
+    }
+    .pricing-meta-row {
+      display: flex; align-items: flex-start; gap: .8rem;
+      font-size: .9rem; color: var(--muted); font-weight: 300; line-height: 1.7;
+    }
+    .pricing-meta-row::before {
+      content: ''; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--sage-lt); flex-shrink: 0; margin-top: .62rem;
+    }
+    .pricing-bank {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 400; color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+    .pricing-bank span {
+      display: block; font-family: 'Inter', sans-serif;
+      font-size: .8rem; color: var(--muted); font-weight: 300; margin-top: .15rem;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .steps {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2rem; margin-top: 3rem;
+    }
+    .step { display: flex; flex-direction: column; gap: .7rem; }
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem; font-weight: 300; color: var(--sage-lt);
+      line-height: 1;
+    }
+    .step h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 500; color: var(--text);
+    }
+    .step p {
+      font-size: .92rem; color: var(--muted); line-height: 1.8; font-weight: 300;
+    }
+
+    /* ── CALENDAR ── */
+    .calendar-placeholder {
+      background: var(--warm); border: 1.5px dashed var(--border);
+      border-radius: 14px; padding: 3rem 2rem;
+      text-align: center; margin-top: 2rem;
+    }
+    .calendar-placeholder p {
+      font-size: .9rem; color: var(--muted); font-weight: 300;
+    }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1.4fr;
+      gap: 5rem; align-items: start;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-item-label {
+      font-size: .65rem; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--sage); font-weight: 400; margin-bottom: .2rem;
+    }
+    .contact-item-val {
+      font-size: .97rem; color: var(--text); font-weight: 300; line-height: 1.7;
+    }
+    .contact-item-val a { color: var(--sage); text-decoration: none; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1.1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: .35rem; }
+    .form-label {
+      font-size: .65rem; font-weight: 400; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .form-input, .form-textarea {
+      background: var(--warm); border: 1px solid var(--border);
+      border-radius: 10px; padding: .85rem 1.1rem;
+      font-family: 'Inter', sans-serif; font-size: .95rem; font-weight: 300;
+      color: var(--text); outline: none; transition: border-color .25s;
+    }
+    .form-input:focus, .form-textarea:focus { border-color: var(--sage-lt); }
+    .form-textarea { resize: vertical; min-height: 120px; }
+    .form-submit {
+      background: var(--sage); color: #fff; border: none;
+      padding: .95rem 2.3rem; border-radius: 30px;
+      font-family: 'Inter', sans-serif; font-size: .78rem; font-weight: 400;
+      letter-spacing: .12em; text-transform: uppercase;
+      cursor: pointer; align-self: flex-start;
+      transition: background .25s, transform .2s;
+    }
+    .form-submit:hover { background: var(--sage-dk); transform: translateY(-1px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #38322F;
+      padding: 4rem 6% 2.5rem;
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 3rem; padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 400; color: rgba(255,255,255,.8);
+      margin-bottom: .4rem;
+    }
+    .footer-logo-sub {
+      font-size: .72rem; letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(255,255,255,.35); font-weight: 300;
+    }
+    .footer-col-title {
+      font-size: .65rem; letter-spacing: .22em; text-transform: uppercase;
+      color: rgba(255,255,255,.35); font-weight: 400; margin-bottom: 1.1rem;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+    .footer-links a {
+      font-size: .88rem; color: rgba(255,255,255,.5); text-decoration: none;
+      font-weight: 300; transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--sage-lt); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem; padding-top: 2rem;
+      font-size: .78rem; color: rgba(255,255,255,.3); font-weight: 300;
+    }
+    .footer-bottom a { color: rgba(255,255,255,.3); text-decoration: none; transition: color .2s; }
+    .footer-bottom a:hover { color: var(--sage-lt); }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0; transform: translateY(18px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: none; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(7px); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .split-grid { grid-template-columns: 1fr; }
+      .split-img-accent { display: none; }
+      .approach-cards, .media-grid, .pricing-grid, .steps, .footer-top { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .nav-links { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Mgr. Roman Žižlavský</a>
+  <ul class="nav-links">
+    <li><a href="#o-mne">O mně</a></li>
+    <li><a href="#jak-pracuji">Jak pracuji</a></li>
+    <li><a href="#cenik">Ceník</a></li>
+    <li><a href="#rezervace" class="nav-cta">Rezervace</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="main">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-tag">psychoterapie · kyjov</h1>
+    <h2 class="hero-h2">Společně můžeme&nbsp;vytvořit<br><em>prostor pro změnu.</em></h2>
+<p class="hero-desc">Individuální a párová terapie v Kyjově i online.</p>
+  </div>
+  <div class="scroll-hint">Dolů</div>
+</section>
+
+
+<!-- INTRO -->
+<section class="section" id="uvod">
+  <div class="prose-inner">
+    <div class="reveal">
+      <h2 class="s-title">Možná vás trápí…</h2>
+      <div class="thin-rule"></div>
+      <div class="s-body">
+        <p>Mnoho lidí žije s pocitem, že by měli své problémy zvládnout sami. Ale nemusí to tak být. Můžeme si být navzájem podporou. Nabízím bezpečný prostor, kde na vaše starosti a obavy můžeme být společně.</p>
+      </div>
+      <ul class="intro-list">
+        <li>Úzkost nebo panické ataky, které přicházejí nečekaně</li>
+        <li>Vztah, který nefunguje tak, jak byste si přáli</li>
+        <li>Pocit ztráty smyslu nebo životní krize</li>
+        <li>Stres a přetížení, ze kterých nevidíte cestu ven</li>
+        <li>Existenciální otázky, duchovní hledání nebo zdravá spiritualita</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- O MNĚ -->
+<section class="section tinted" id="o-mne">
+  <div class="section-inner">
+    <div class="split-grid">
+      <div class="split-img reveal">
+        <img src="img/roman.webp" alt="Portrét Mgr. Romana Žižlavského" loading="lazy">
+        <div class="split-img-accent"></div>
+      </div>
+      <div class="split-text reveal">
+        <h2 class="s-title">Mgr. Roman Žižlavský</h2>
+        <div class="s-body">
+          <p>Pocházím z Kyjova. Vystudoval jsem psychosociální studia a teologii na Husitské teologické fakultě UK v Praze, kde jsem také dlouho žil. Vystřídal jsem různorodé práce – pracoval jsem s duševně nemocnými, s bezdomovci, se seniory i třeba jako kuchař či zahradník.</p>
+          <p>Díky dlouholeté praxi osobního rozvoje a vlastním zkušenostem s náročnými psychickými stavy vnímám hluboce křehkost a zranitelnost naší psychiky. Praxe meditace mi zároveň pomohla získat hlubší vhled do struktury a dynamiky jejího fungování.</p>
+          <p>Při práci vycházím z výcviku v integrativní gestalt terapii (INSTEP). Inspiruje mě C. G. Jung a praxe všímavosti. Snažím se ke každému přistupovat s otevřenou myslí a pochopením – věřím, že podstatná není použitá technika, ale vzájemný vztah a důvěra.</p>
+          <p>Posiluje mě příroda, práce na zahradě a hudba.</p>
+        </div>
+        <div class="stats">
+          <div>
+            <div class="stat-val">300+</div>
+            <div class="stat-label">hodin praxe</div>
+          </div>
+          <div>
+            <div class="stat-val">od 2024</div>
+            <div class="stat-label">s klienty</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JAK PRACUJI -->
+<section class="section" id="jak-pracuji">
+  <div class="section-inner">
+    <div class="approach-intro reveal">
+      <h2 class="s-title">Terapeutický přístup</h2>
+      <div class="thin-rule"></div>
+      <p class="s-body">V rámci integrativního přístupu mám za to, že není až tak podstatné, jakou terapeutickou školu či techniku používáme, ale spíše jak k sobě dokážeme být otevření a vnímaví.</p>
+    </div>
+    <div class="approach-cards">
+      <div class="approach-card reveal">
+        <h3>Gestalt terapie</h3>
+        <p>Pracujeme s tím, co se děje teď a tady – ve slovech, v těle i emocích. Uvědomíte si vzorce, které vás omezují, a získáte větší svobodu ve svých reakcích.</p>
+      </div>
+      <div class="approach-card reveal">
+        <h3>Jungovská psychologie</h3>
+        <p>Prozkoumáváme hlubší vrstvy psychiky – sny, symboly a archetypy. Pochopením vlastních vzorců a stínových stránek osobnosti nacházíte cestu k sobě samému.</p>
+      </div>
+      <div class="approach-card reveal">
+        <h3>Mindfulness</h3>
+        <p>Techniky všímavosti vám pomáhají zakotvit se v přítomnosti a reagovat vědomě místo automaticky. Klidnější mysl pro každodenní výzvy.</p>
+      </div>
+    </div>
+    <div class="approach-more reveal">
+      <p>V terapii je u mě podstatný rozhovor o tom, co se děje teď a tady – nejen ve slovech, ale i se zaměřením na tělesné projevy a emoce. K pochopení toho, co se odehrává v přítomnosti, ale také často potřebujeme otevírat témata minulosti.</p>
+      <p>Pokud je to na místě a máme dostatečnou vzájemnou důvěru, můžeme spolu nacvičovat všímavost, relaxaci, věnovat se vizualizacím, snům nebo jemné imaginaci.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CITÁT -->
+<div class="quote-band">
+  <div class="quote-band-bg"></div>
+  <div class="quote-band-overlay"></div>
+  <div class="quote-band-content reveal">
+    <blockquote>„Strach je přirozenou reakcí na to, že se přibližujeme pravdě."</blockquote>
+    <cite>Pema Čhödrön</cite>
+  </div>
+</div>
+
+<!-- UKÁZKY -->
+<section class="section tinted" id="ukazky">
+  <div class="section-inner">
+    <div class="reveal">
+      <h2 class="s-title">Publikace &amp; média</h2>
+      <div class="thin-rule"></div>
+      <p class="media-tagline">Píši o psychologii a sdílím své zkušenosti veřejně.</p>
+    </div>
+    <div class="media-grid">
+      <a href="https://psychologie.cz" class="media-card reveal" target="_blank" rel="noopener">
+        <p class="media-type">Článek</p>
+        <h4>Texty na Psychologie.cz</h4>
+        <p>Píši o psychologii, sebepoznání a duševním zdraví pro čtenáře jednoho z největších psychologických portálů v ČR.</p>
+        <span class="media-link">Psychologie.cz →</span>
+      </a>
+      <div class="media-card reveal">
+        <p class="media-type">Video</p>
+        <h4>Rozhovor o psychospirituální krizi</h4>
+        <p>Video rozhovor, ve kterém sdílím svůj pohled na psychospirituální krizi – její příčiny, projevy a možnosti práce s ní.</p>
+        <span class="media-link">Diversity · YouTube →</span>
+      </div>
+      <div class="media-card reveal">
+        <p class="media-type">Knihy</p>
+        <h4>Publikace o sebepoznání</h4>
+        <p>Věnuji se také psaní. Vydal jsem několik knih na téma sebepoznání a vnitřního rozvoje.</p>
+        <span class="media-link">Databáze knih →</span>
+      </div>
+    </div>
+    <p class="media-closing reveal">V terapii jde především o vztah a důvěru.</p>
+  </div>
+</section>
+
+<!-- JAK TO FUNGUJE -->
+<section class="section tinted" id="jak-to-funguje">
+  <div class="section-inner">
+    <div class="reveal">
+      <h2 class="s-title">Od prvního kontaktu po pravidelná sezení – jednoduše a bez zbytečných formalit.</h2>
+      <div class="thin-rule"></div>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <h3>Napište mi</h3>
+        <p>Pošlete krátký e-mail nebo zprávu – stačí pár vět o tom, co vás trápí nebo co hledáte. Odpovím co nejdříve.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <h3>Domluvíme se</h3>
+        <p>Domluvíme termín prvního sezení – online nebo osobně v Kyjově. První sezení je bez závazků.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <h3>Začneme spolu</h3>
+        <p>Poznáme se, povíme si, co vás přivedlo. Pokud si sedneme, domluvíme pravidelná sezení ve vašem tempu.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CENÍK -->
+<section class="section" id="cenik">
+  <div class="section-inner">
+    <div class="reveal">
+      <h2 class="s-title">Každé sezení trvá 50 minut.</h2>
+      <div class="thin-rule"></div>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card reveal">
+        <p class="price-card-type">Online sezení</p>
+        <h3>Videosezení odkudkoliv</h3>
+        <div class="price-card-amount">1 100 <small>Kč / 50 min</small></div>
+        <p class="price-card-desc">Pohodlná terapie z domova přes videohovor. Platba předem do 24 h před sezením.</p>
+      </div>
+      <div class="price-card reveal">
+        <p class="price-card-type">Osobní sezení</p>
+        <h3>Kyjov</h3>
+        <div class="price-card-amount">1 200 <small>Kč / 50 min</small></div>
+        <p class="price-card-desc">Osobní setkání v klidném terapeutickém prostoru. První sezení předem na účet, poté na místě převodem nebo v hotovosti.</p>
+      </div>
+      <div class="price-card reveal">
+        <p class="price-card-type">Párová terapie</p>
+        <h3>Kyjov nebo online</h3>
+        <div class="price-card-amount">1 600 <small>Kč / 50 min</small></div>
+        <p class="price-card-desc">Společná práce na vztahu v bezpečném prostoru.</p>
+      </div>
+    </div>
+    <div class="pricing-meta reveal">
+      <div class="pricing-bank">
+        Platba hotově, převodem nebo kartou
+        <span>670100-2200180295 / 6210 (mBank)</span>
+      </div>
+      <div class="pricing-meta-row">Při zrušení sezení méně než 24 h předem je sezení účtováno v plné výši.</div>
+      <div class="pricing-meta-row">Po dohodě možná individuální sleva pro studenty, solo rodiče a při finanční krizi nebo nízkém příjmu.</div>
+      <div class="pricing-meta-row">Pracuji s dospělými od 18 let. Během terapie má klient plnou odpovědnost za své fyzické a psychické zdraví.</div>
+      <div class="pricing-meta-row">Nespolupracuji se zdravotními pojišťovnami.</div>
+      <div class="pricing-meta-row">Jsem vázán mlčenlivostí a dodržuji etický kodex České asociace pro psychoterapii.</div>
+      <div class="pricing-meta-row">Jsem terapeut ve výcviku. Pracuji pod odbornou supervizí, pravidelnou intervizí a nadále se intenzivně vzdělávám v oboru.</div>
+    </div>
+  </div>
+</section>
+
+<!-- REZERVACE -->
+<section class="section" id="rezervace">
+  <div class="section-inner">
+    <div class="reveal">
+      <h2 class="s-title">Rezervujte si termín</h2>
+      <div class="thin-rule"></div>
+      <p class="s-body">Vyberte si čas, který vám vyhovuje.</p>
+    </div>
+    <!-- Demo kalendář -->
+    <div class="demo-cal reveal" id="demoCal">
+      <div class="demo-cal-header">
+        <button class="dcal-nav" id="dcalPrev">&#8249;</button>
+        <span class="dcal-title" id="dcalTitle"></span>
+        <button class="dcal-nav" id="dcalNext">&#8250;</button>
+      </div>
+      <div class="demo-cal-label">&#8681; ZVOLTE DEN ZAČÁTKU REZERVACE</div>
+      <div class="demo-cal-grid" id="dcalGrid"></div>
+      <p class="demo-cal-note">Ukázkový kalendář · po vytvoření účtu na <strong>Reenio</strong> bude nahrazen skutečným widgetem</p>
+    </div>
+
+    <style>
+      .demo-cal {
+        background: var(--warm); border: 1px solid var(--border);
+        border-radius: 16px; overflow: hidden; margin-top: 2rem;
+        font-family: 'Inter', sans-serif;
+      }
+      .demo-cal-header {
+        background: var(--sage); display: flex;
+        align-items: center; justify-content: space-between;
+        padding: .9rem 1.5rem;
+      }
+      .dcal-nav {
+        background: none; border: none; color: #fff;
+        font-size: 1.8rem; cursor: pointer; line-height: 1;
+        padding: 0 .4rem; opacity: .85; transition: opacity .2s;
+      }
+      .dcal-nav:hover { opacity: 1; }
+      .dcal-title {
+        color: #fff; font-size: .85rem; font-weight: 500;
+        letter-spacing: .12em; text-transform: uppercase;
+      }
+      .demo-cal-label {
+        background: var(--sage-lt); color: #fff;
+        text-align: center; padding: .55rem 1rem;
+        font-size: .72rem; font-weight: 500; letter-spacing: .12em;
+      }
+      .demo-cal-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+      }
+      .dcal-month { padding: 1.2rem 1rem; }
+      .dcal-month + .dcal-month { border-left: 1px solid var(--border); }
+      .dcal-month-name {
+        text-align: center; font-size: .75rem; font-weight: 500;
+        letter-spacing: .1em; text-transform: uppercase;
+        color: var(--text); margin-bottom: .8rem;
+      }
+      .dcal-days-header {
+        display: grid; grid-template-columns: repeat(7, 1fr);
+        margin-bottom: .4rem;
+      }
+      .dcal-day-name {
+        text-align: center; font-size: .62rem; font-weight: 500;
+        color: var(--muted); letter-spacing: .05em; padding: .2rem 0;
+      }
+      .dcal-days {
+        display: grid; grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+      }
+      .dcal-day {
+        text-align: center; font-size: .78rem;
+        padding: .4rem .1rem; border-radius: 6px;
+        cursor: default; color: var(--muted);
+      }
+      .dcal-day.available {
+        background: var(--sage); color: #fff;
+        cursor: pointer; font-weight: 500;
+        transition: background .2s;
+      }
+      .dcal-day.available:hover { background: var(--sage-dk); }
+      .dcal-day.today {
+        border: 1.5px solid var(--sage); color: var(--sage); font-weight: 500;
+      }
+      .dcal-day.selected {
+        background: var(--sage-dk) !important; color: #fff !important;
+        box-shadow: 0 0 0 2px var(--rose-lt);
+      }
+      .dcal-day.empty { cursor: default; }
+      .demo-cal-note {
+        text-align: center; font-size: .75rem; color: var(--muted);
+        padding: .9rem 1rem; border-top: 1px solid var(--border);
+        font-weight: 300;
+      }
+      @media (max-width: 700px) {
+        .demo-cal-grid { grid-template-columns: 1fr; }
+        .dcal-month + .dcal-month { border-left: none; border-top: 1px solid var(--border); }
+      }
+    </style>
+
+    <script>
+    (function() {
+      const days = ['PO','ÚT','ST','ČT','PÁ','SO','NE'];
+      const months = ['Leden','Únor','Březen','Duben','Květen','Červen',
+                      'Červenec','Srpen','Září','Říjen','Listopad','Prosinec'];
+      const COLS = 3;
+      let startOffset = 0;
+      let selected = null;
+      const today = new Date();
+
+      // available: Mon–Fri only, not in the past
+      function isAvailable(d) {
+        const dow = d.getDay(); // 0=Sun,6=Sat
+        if (dow === 0 || dow === 6) return false;
+        const t = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        return d >= t;
+      }
+
+      function renderMonth(year, month) {
+        const first = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0).getDate();
+        // Monday-based offset
+        let startDow = first.getDay(); // 0=Sun
+        startDow = startDow === 0 ? 6 : startDow - 1;
+
+        let html = `<div class="dcal-month-name">${months[month]}, ${year}</div>`;
+        html += '<div class="dcal-days-header">';
+        days.forEach(d => html += `<div class="dcal-day-name">${d}</div>`);
+        html += '</div><div class="dcal-days">';
+        for (let i = 0; i < startDow; i++) html += '<div class="dcal-day empty"></div>';
+        for (let d = 1; d <= lastDay; d++) {
+          const date = new Date(year, month, d);
+          const isToday = date.toDateString() === today.toDateString();
+          const avail = isAvailable(date);
+          const selKey = date.toDateString();
+          const cls = [
+            'dcal-day',
+            avail ? 'available' : '',
+            isToday ? 'today' : '',
+            selected === selKey ? 'selected' : ''
+          ].join(' ').trim();
+          const key = avail ? `data-key="${selKey}"` : '';
+          html += `<div class="${cls}" ${key}>${d}</div>`;
+        }
+        html += '</div>';
+        return `<div class="dcal-month">${html}</div>`;
+      }
+
+      function render() {
+        const grid = document.getElementById('dcalGrid');
+        const title = document.getElementById('dcalTitle');
+        let html = '';
+        const base = new Date(today.getFullYear(), today.getMonth() + startOffset, 1);
+        for (let i = 0; i < COLS; i++) {
+          const m = new Date(base.getFullYear(), base.getMonth() + i, 1);
+          html += renderMonth(m.getFullYear(), m.getMonth());
+        }
+        grid.innerHTML = html;
+        const m0 = new Date(base.getFullYear(), base.getMonth(), 1);
+        const mLast = new Date(base.getFullYear(), base.getMonth() + COLS - 1, 1);
+        title.textContent = `${months[m0.getMonth()]} – ${months[mLast.getMonth()]} ${mLast.getFullYear()}`;
+
+        grid.querySelectorAll('.dcal-day.available').forEach(el => {
+          el.addEventListener('click', () => {
+            selected = el.dataset.key;
+            render();
+          });
+        });
+      }
+
+      document.getElementById('dcalPrev').addEventListener('click', () => { startOffset--; render(); });
+      document.getElementById('dcalNext').addEventListener('click', () => { startOffset++; render(); });
+      render();
+    })();
+    </script>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section class="section tinted" id="kontakt">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div>
+          <h2 class="s-title">Napište mi</h2>
+          <div class="thin-rule"></div>
+        </div>
+        <div>
+          <p class="contact-item-label">E-mail</p>
+          <p class="contact-item-val"><a href="mailto:svoboda.srdce@gmail.com">svoboda.srdce@gmail.com</a></p>
+        </div>
+        <div>
+          <p class="contact-item-label">Místo</p>
+          <p class="contact-item-val">Kyjov<br>Jihomoravský kraj</p>
+        </div>
+        <div>
+          <p class="contact-item-label">Online sezení</p>
+          <p class="contact-item-val">Videohovor na dohodnuté platformě</p>
+        </div>
+      </div>
+      <form class="contact-form reveal" action="https://formspree.io/f/xgoporaj" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="name">Jméno</label>
+            <input class="form-input" type="text" id="name" name="name" placeholder="Vaše jméno" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">E-mail</label>
+            <input class="form-input" type="email" id="email" name="email" placeholder="vas@email.cz" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="message">Zpráva</label>
+          <textarea class="form-textarea" id="message" name="message" placeholder="Pár vět o tom, co vás trápí nebo co hledáte…" required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Odeslat zprávu</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">Mgr. Roman Žižlavský</div>
+      <div class="footer-logo-sub">Psychoterapie · Kyjov</div>
+    </div>
+    <div>
+      <p class="footer-col-title">Navigace</p>
+      <ul class="footer-links">
+        <li><a href="#o-mne">O mně</a></li>
+        <li><a href="#jak-pracuji">Jak pracuji</a></li>
+        <li><a href="#jak-to-funguje">Jak to funguje</a></li>
+        <li><a href="#cenik">Ceník</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Kontakt</p>
+      <ul class="footer-links">
+        <li><a href="mailto:svoboda.srdce@gmail.com">svoboda.srdce@gmail.com</a></li>
+        <li>Kyjov, Jihomoravský kraj</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>IČO: 75333155 &nbsp;·&nbsp; © 2026 Mgr. Roman Žižlavský</span>
+    <a href="https://ukazsewebem.cz" target="_blank" rel="noopener">ukazsewebem.cz</a>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        e.target.style.transitionDelay = (i % 3) * 90 + 'ms';
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
