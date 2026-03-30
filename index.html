@@ -701,24 +701,24 @@
       <p class="media-tagline">Píši o psychologii a sdílím své zkušenosti veřejně.</p>
     </div>
     <div class="media-grid">
-      <a href="https://psychologie.cz" class="media-card reveal" target="_blank" rel="noopener">
+      <a href="https://psychologie.cz/autor/roman-zizlavsky/" class="media-card reveal" target="_blank" rel="noopener">
         <p class="media-type">Článek</p>
         <h4>Texty na Psychologie.cz</h4>
         <p>Píši o psychologii, sebepoznání a duševním zdraví pro čtenáře jednoho z největších psychologických portálů v ČR.</p>
         <span class="media-link">Psychologie.cz →</span>
       </a>
-      <div class="media-card reveal">
+      <a href="https://www.youtube.com/watch?v=rfQGdXl2SmU" class="media-card reveal" target="_blank" rel="noopener">
         <p class="media-type">Video</p>
         <h4>Rozhovor o psychospirituální krizi</h4>
         <p>Video rozhovor, ve kterém sdílím svůj pohled na psychospirituální krizi – její příčiny, projevy a možnosti práce s ní.</p>
         <span class="media-link">Diversity · YouTube →</span>
-      </div>
-      <div class="media-card reveal">
+      </a>
+      <a href="https://www.databazeknih.cz/autori/roman-zizlavsky-33397" class="media-card reveal" target="_blank" rel="noopener">
         <p class="media-type">Knihy</p>
         <h4>Publikace o sebepoznání</h4>
         <p>Věnuji se také psaní. Vydal jsem několik knih na téma sebepoznání a vnitřního rozvoje.</p>
         <span class="media-link">Databáze knih →</span>
-      </div>
+      </a>
     </div>
   </div>
 </section>
@@ -802,7 +802,7 @@
   <div class="quote-band-bg" style="background-image: url('img/sunset.jpg'); background-position: center 40%;"></div>
   <div class="quote-band-overlay"></div>
   <div class="quote-band-content reveal">
-    <blockquote>„V terapii jde především o vztah a důvěru."</blockquote>
+    <blockquote>V terapii jde především o vztah a důvěru.</blockquote>
   </div>
 </div>
 
@@ -1005,7 +1005,7 @@
           <p class="contact-item-val">Videohovor na dohodnuté platformě</p>
         </div>
       </div>
-      <form class="contact-form reveal" action="https://formspree.io/f/xgoporaj" method="POST">
+      <form class="contact-form reveal" id="my-form" action="https://formspree.io/f/xgoporaj" method="POST">
         <div class="form-row">
           <div class="form-group">
             <label class="form-label" for="name">Jméno</label>
@@ -1020,7 +1020,8 @@
           <label class="form-label" for="message">Zpráva</label>
           <textarea class="form-textarea" id="message" name="message" placeholder="Pár vět o tom, co vás trápí nebo co hledáte…" required></textarea>
         </div>
-        <button type="submit" class="form-submit">Odeslat zprávu</button>
+        <button type="submit" class="form-submit" id="my-form-button">Odeslat zprávu</button>
+        <p id="my-form-status" style="margin-top:1rem; font-size:.95rem;"></p>
       </form>
     </div>
   </div>
@@ -1093,6 +1094,39 @@
     });
   }, { threshold: 0.08 });
   reveals.forEach(el => io.observe(el));
+
+  // Formspree AJAX
+  var form = document.getElementById("my-form");
+  async function handleSubmit(event) {
+    event.preventDefault();
+    var status = document.getElementById("my-form-status");
+    var data = new FormData(event.target);
+    fetch(event.target.action, {
+      method: form.method,
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if (response.ok) {
+        status.style.color = 'var(--sage-dk)';
+        status.innerHTML = "Zpráva odeslána. Ozvu se co nejdříve.";
+        form.reset();
+      } else {
+        response.json().then(data => {
+          if (Object.hasOwn(data, 'errors')) {
+            status.style.color = 'var(--rose)';
+            status.innerHTML = data["errors"].map(error => error["message"]).join(", ");
+          } else {
+            status.style.color = 'var(--rose)';
+            status.innerHTML = "Něco se pokazilo. Zkuste to prosím znovu.";
+          }
+        });
+      }
+    }).catch(() => {
+      status.style.color = 'var(--rose)';
+      status.innerHTML = "Něco se pokazilo. Zkuste to prosím znovu.";
+    });
+  }
+  form.addEventListener("submit", handleSubmit);
 </script>
 </body>
 </html>
