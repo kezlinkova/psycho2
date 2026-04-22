@@ -222,7 +222,7 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,.06); }
 }
 .quote-band-bg {
   position: absolute; inset: 0;
-  background-image: url('img/prayer-flags.jpg');
+  background-image: url('img/prayer-flags.webp');
   background-size: cover; background-position: center;
   filter: saturate(.5) brightness(.6);
 }
