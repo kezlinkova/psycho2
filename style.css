@@ -461,6 +461,7 @@ footer {
   .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
   .form-row { grid-template-columns: 1fr; }
   .nav-burger { display: flex; }
+  nav { background: var(--cream); backdrop-filter: none; }
   .nav-links {
     display: none; flex-direction: column; align-items: center;
     position: fixed; top: 0; left: 0; right: 0; bottom: 0;
