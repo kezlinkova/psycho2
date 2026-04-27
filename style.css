@@ -231,6 +231,11 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,.06); }
   background: linear-gradient(135deg, rgba(90,122,94,.55), rgba(58,51,48,.5));
 }
 .quote-band-content { position: relative; max-width: 680px; margin: 0 auto; }
+.quote-band--light .quote-band-bg { filter: saturate(.6) brightness(.9); }
+.quote-band--light .quote-band-overlay {
+  background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(58,51,48,.4) 0%, transparent 100%),
+              linear-gradient(135deg, rgba(90,122,94,.15), rgba(90,122,94,.1));
+}
 .quote-band blockquote {
   font-size: clamp(1.5rem, 3vw, 2.1rem);
   font-weight: 400; font-style: italic; color: #fff; line-height: 1.5;
