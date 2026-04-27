@@ -10,4 +10,4 @@ Allow: /
 User-agent: anthropic-ai
 Allow: /
 
-Sitemap: https://www.romanzizlavsky.cz/sitemap.xml
+Sitemap: https://www.terapiekyjov.cz/sitemap.xml
