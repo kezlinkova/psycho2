@@ -464,7 +464,7 @@ footer {
   .nav-links {
     display: none; flex-direction: column; align-items: flex-start;
     position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(249,246,240,.97); backdrop-filter: blur(10px);
+    background: var(--cream);
     padding: 6rem 6% 3rem; gap: 1.8rem; z-index: 150;
   }
   .nav-links.open { display: flex; }
